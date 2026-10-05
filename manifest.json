@@ -1,0 +1,26 @@
+{
+  "name": "Dhaka Jam Escape — ঢাকা জ্যাম এস্কেপ",
+  "short_name": "Jam Escape",
+  "description": "A funny lane-runner through Dhaka traffic. Reach school or office before 9 AM!",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFF4E0",
+  "theme_color": "#E6397D",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Dhaka Jam Escape app icon: a rickshaw-art wheel + clock on a pink sticker -->
+  <rect width="512" height="512" rx="112" fill="#E6397D"/>
+  <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#FFC72C" stroke-width="12" stroke-dasharray="4 22" stroke-linecap="round"/>
+  <g transform="translate(256 270)">
+    <circle r="150" fill="#FFF4E0" stroke="#2A1E3B" stroke-width="18"/>
+    <g fill="#00A6A6">
+      <ellipse cx="0" cy="-104" rx="22" ry="30"/>
+      <ellipse cx="0" cy="104" rx="22" ry="30"/>
+      <ellipse cx="-104" cy="0" rx="30" ry="22"/>
+      <ellipse cx="104" cy="0" rx="30" ry="22"/>
+    </g>
+    <g fill="#FFC72C" stroke="#2A1E3B" stroke-width="6">
+      <path d="M-74 -74 l14 -14 l14 14 l-14 14z"/>
+      <path d="M74 -74 l14 -14 l14 14 l-14 14z" transform="translate(-28 0)"/>
+      <path d="M-74 74 l14 -14 l14 14 l-14 14z"/>
+      <path d="M46 74 l14 -14 l14 14 l-14 14z"/>
+    </g>
+    <line x1="0" y1="0" x2="0" y2="-82" stroke="#2A1E3B" stroke-width="18" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="58" y2="22" stroke="#F42A41" stroke-width="16" stroke-linecap="round"/>
+    <circle r="20" fill="#FFC72C" stroke="#2A1E3B" stroke-width="8"/>
+  </g>
+  <g transform="translate(256 90)">
+    <circle cx="-62" cy="0" r="30" fill="#FFC72C" stroke="#2A1E3B" stroke-width="12"/>
+    <circle cx="62" cy="0" r="30" fill="#FFC72C" stroke="#2A1E3B" stroke-width="12"/>
+  </g>
+</svg>
