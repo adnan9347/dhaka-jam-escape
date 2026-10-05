@@ -105,7 +105,16 @@ function wrapLines(g, text, maxW) {
   return lines;
 }
 
-function outlinedText(g, text, x, y, fill, stroke, lw) {
+/**
+ * Big outlined heading text. Bangla is drawn clean (no outline) in
+ * `bnFill`, a color with strong contrast on the card background.
+ */
+function outlinedText(g, text, x, y, fill, stroke, lw, bnFill) {
+  if (getLang() === 'bn') {
+    g.fillStyle = bnFill || fill;
+    g.fillText(text, x, y);
+    return;
+  }
   g.lineJoin = 'round';
   g.lineWidth = lw;
   g.strokeStyle = stroke;
@@ -177,7 +186,7 @@ export function buildCard(result, opts) {
   g.textAlign = 'center';
   g.textBaseline = 'middle';
   g.font = canvasFont(800, 76);
-  outlinedText(g, t('appTitle'), W / 2, 150, '#FFC72C', O, 14);
+  outlinedText(g, t('appTitle'), W / 2, 150, '#FFC72C', O, 14, dark ? '#FFD54F' : '#B5135A');
 
   // character in its result pose, on a sticker-style disc
   g.fillStyle = result.win ? '#FFC72C' : '#A8DADC';
@@ -198,9 +207,11 @@ export function buildCard(result, opts) {
   let y = 695;
   for (const line of wrapLines(g, opts.mainText, W - 200)) {
     outlinedText(g, line, W / 2, y, result.win ? (dark ? '#2EE59D' : '#08704D') : dark ? '#FF7AB0' : '#B5135A', dark ? '#000' : '#FFFFFF', 10);
-    g.lineWidth = 3;
-    g.strokeStyle = O;
-    g.strokeText(line, W / 2, y);
+    if (getLang() !== 'bn') {
+      g.lineWidth = 3;
+      g.strokeStyle = O;
+      g.strokeText(line, W / 2, y);
+    }
     y += 74;
   }
 
@@ -244,7 +255,7 @@ export function buildCard(result, opts) {
 
   // call to action + URL
   g.font = canvasFont(800, 64);
-  outlinedText(g, t('shareBeat') + ' 🛺', W / 2, Math.min(by + 230, H - B - 120), '#FFFFFF', '#E6397D', 14);
+  outlinedText(g, t('shareBeat') + ' 🛺', W / 2, Math.min(by + 230, H - B - 120), '#FFFFFF', '#E6397D', 14, dark ? '#FF7AB0' : '#B5135A');
   g.font = canvasFont(600, 34, false);
   g.fillStyle = text;
   g.fillText(location.origin.replace(/^https?:\/\//, ''), W / 2, H - B - 46);

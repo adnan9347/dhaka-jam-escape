@@ -21,7 +21,7 @@ import { EntityManager, Spawner } from './entities.js';
 import { Background, FOOTPATH_DEPTH } from './background.js';
 import { Effects } from './effects.js';
 import { sfx } from '../js/audio.js';
-import { t, pick, canvasFont, fmtNum } from '../js/i18n.js';
+import { t, pick, canvasFont, fmtNum, getLang } from '../js/i18n.js';
 
 // ======================================================================
 //  CONFIG — every tunable number in one place
@@ -748,7 +748,7 @@ export class Game {
       else this._drawEntity(ctx, it);
     }
 
-    fx.draw(ctx, canvasFont);
+    fx.draw(ctx, canvasFont, getLang() === 'bn');
     fx.drawRain(ctx);
 
     if (n > 0.02) {

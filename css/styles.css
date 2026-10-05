@@ -40,10 +40,11 @@
   --urgent-bg: #C8102E;
   --urgent-text: #FFFFFF;
   --check-bg: #08704D;
-  --title-1: #C2185B;
-  --title-2: #A14A00;
-  --title-3: #00707A;
-  --title-4: #08704D;
+  /* game-name letters: deep, saturated colors with ≥5.5:1 contrast on the background */
+  --title-1: #B5135A; /* rickshaw pink */
+  --title-2: #006A4E; /* Bangladesh green */
+  --title-3: #1E3A8A; /* indigo */
+  --title-4: #6A1B9A; /* purple */
 
   --font-display: 'Baloo 2', 'Anek Bangla', system-ui, sans-serif;
   --font-body: 'Poppins', 'Anek Bangla', system-ui, sans-serif;
@@ -1024,6 +1025,27 @@ html:not(.is-touch) .device-touch {
 }
 .count-num.go {
   color: var(--leaf-green);
+}
+
+/* Bangla text is shown clean — no outline or shadow behind the letters
+   (strokes muddy the joined Bangla letterforms). */
+html[lang="bn"] .title-big .ch,
+html[lang="bn"] .title-mid {
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+html[lang="bn"] .count-num {
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  color: var(--heading);
+  background: var(--surface);
+  border: 4px solid var(--outline);
+  border-radius: 28px;
+  box-shadow: var(--sticker-shadow);
+  padding: 0.08em 0.4em 0;
+}
+html[lang="bn"] .count-num.go {
+  color: var(--success-text);
 }
 
 /* Boss is calling! */

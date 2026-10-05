@@ -269,7 +269,8 @@ export class Effects {
     this.flashA = Math.max(0, this.flashA - dt * 2.5);
   }
 
-  draw(ctx, font) {
+  /** plain = true → no outline behind the text (used for Bangla). */
+  draw(ctx, font, plain = false) {
     const parts = this.parts;
     for (let i = 0; i < parts.length; i++) {
       const p = parts[i];
@@ -344,10 +345,10 @@ export class Effects {
     }
     ctx.globalAlpha = 1;
 
-    if (font) this.drawTexts(ctx, font);
+    if (font) this.drawTexts(ctx, font, plain);
   }
 
-  drawTexts(ctx, font) {
+  drawTexts(ctx, font, plain = false) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.lineJoin = 'round';
@@ -361,11 +362,24 @@ export class Effects {
       // keep long phrases fully on screen
       const half = ctx.measureText(t.text).width / 2 + 8;
       const x = Math.max(half, Math.min(this.rainW - half, t.x));
-      ctx.lineWidth = 6;
-      ctx.strokeStyle = '#2A1E3B';
-      ctx.strokeText(t.text, x, t.y);
-      ctx.fillStyle = t.color;
-      ctx.fillText(t.text, x, t.y);
+      if (plain) {
+        // colored sticker pill with dark text — readable without outlining the letters
+        const w = half * 2 + 6;
+        const h = t.size * pop + 12;
+        ctx.fillStyle = t.color;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(x - w / 2, t.y - h / 2, w, h, h / 2);
+        else ctx.rect(x - w / 2, t.y - h / 2, w, h);
+        ctx.fill();
+        ctx.fillStyle = '#2A1E3B';
+        ctx.fillText(t.text, x, t.y + 1);
+      } else {
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#2A1E3B';
+        ctx.strokeText(t.text, x, t.y);
+        ctx.fillStyle = t.color;
+        ctx.fillText(t.text, x, t.y);
+      }
     }
     ctx.globalAlpha = 1;
   }
