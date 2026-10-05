@@ -1031,10 +1031,14 @@ html:not(.is-touch) .device-touch {
    (strokes muddy the joined Bangla letterforms). */
 /* English title keeps its thick dark outline, so it can use bright, punchy fills */
 html[lang="en"] .title-big {
-  --title-1: #FF4F9A; /* bright rickshaw pink */
-  --title-2: #22C98E; /* bright green */
-  --title-3: #3B82F6; /* bright blue */
-  --title-4: #A855F7; /* bright purple */
+  --title-1: #FF3D9A; /* neon rickshaw pink */
+  --title-2: #FFD21F; /* sunflower yellow */
+  --title-3: #00D4FF; /* electric cyan */
+  --title-4: #2EE59D; /* mint green */
+}
+html[lang="en"] .title-big .ch {
+  -webkit-text-stroke: 0.11em var(--outline);
+  text-shadow: 0.07em 0.07em 0 var(--outline);
 }
 html[lang="bn"] .title-big .ch,
 html[lang="bn"] .title-mid {
