@@ -9,7 +9,7 @@
  */
 
 import { detectLang, setLang, getLang, onLangChange, t } from './i18n.js';
-import { setTheme, toggleTheme, getTheme, onThemeChange } from './theme.js';
+import { setTheme, getTheme } from './theme.js';
 import { unlockAudio, sfx, setMuted, isMuted, startMusic, stopMusic, suspendAudio, resumeAudio } from './audio.js';
 import { createUI } from './ui.js';
 import { shareResult, prepareShare } from './share.js';
@@ -178,7 +178,7 @@ async function doShare() {
 
 async function boot() {
   setLang(detectLang());
-  setTheme('light', false);
+  setTheme('light'); // light theme only (no dark mode)
   document.documentElement.classList.toggle('is-touch', window.matchMedia('(pointer: coarse)').matches);
 
   await fontsReady();
@@ -216,10 +216,6 @@ async function boot() {
       setLang(getLang() === 'bn' ? 'en' : 'bn');
       sfx('click');
     },
-    toggleTheme: () => {
-      toggleTheme();
-      sfx('click');
-    },
     toggleMute: () => {
       ensureAudio();
       setMuted(!isMuted());
@@ -239,7 +235,7 @@ async function boot() {
     onEnd: handleEnd
   });
   game.setReduced(reduceMQ.matches);
-  game.setNight(getTheme() === 'dark', true);
+  game.setNight(false, true); // the game is light-theme only
   reduceMQ.addEventListener && reduceMQ.addEventListener('change', (e) => game.setReduced(e.matches));
 
   input = new Input(document.getElementById('game-area'), {
@@ -250,12 +246,6 @@ async function boot() {
     isActive: () => game.isPlaying()
   });
 
-  onThemeChange((th) => {
-    game.setNight(th === 'dark');
-    ui.syncControls();
-    ui.refreshCanvases();
-    if (state.lastResult && ui.screen === 'game') prepareShare(state.lastResult, shareOpts());
-  });
   onLangChange(() => {
     ui.applyI18n();
     if (state.lastResult && ui.screen === 'game') prepareShare(state.lastResult, shareOpts());

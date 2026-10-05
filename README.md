@@ -7,8 +7,8 @@ puddles, a VIP motorcade, hawkers, stray dogs, the coaching bhai and your
 boss's phone calls. Sip cha ☕, grab shingara 🥟, take alley shortcuts ⏰, and
 reach school or the office before the clock hits **9:00 AM**.
 
-- Fully bilingual: **বাংলা** and **English** (switch any time, even mid-game)
-- Light "Dhaka Morning" and dark "Dhaka Night" themes with a smooth day ↔ night fade
+- Fully bilingual: **বাংলা** (Anek Bangla font) and **English** (switch any time, even mid-game)
+- Bright "Dhaka Morning" rickshaw-art look (light theme, WCAG AA text contrast)
 - Random weather: sunny or rainy (more puddles, rain, wet roads)
 - Endless mode 🔥 unlocks after your first win
 - Share card image (1080×1350) with your result
@@ -63,7 +63,7 @@ css/styles.css      rickshaw-art design system (light + dark tokens)
 js/main.js          boots the app, screen flow, global in-memory state
 js/ui.js            menus, HUD, overlays, Motion animations, mini canvases
 js/i18n.js          Bangla / English text, number + clock formatting
-js/theme.js         light / dark theme + canvas color palettes
+js/theme.js         color palette shared with the canvas
 js/audio.js         Web Audio sound effects, background beat, mute
 js/share.js         share-card image + native share / download fallback
 game/engine.js      game loop, rules, collisions, CONFIG (tuning numbers)
@@ -114,7 +114,7 @@ Strings can use `{placeholders}`, e.g. `shareText: 'I survived {km} km…'`.
 
 ## Notes
 
-- Nothing is saved: language, theme, role, nickname and the session best all
+- Nothing is saved: language, role, nickname and the session best all
   live in memory. Refresh starts fresh.
 - Sound starts after your first tap (browser autoplay rules). Use the speaker
   button to mute.

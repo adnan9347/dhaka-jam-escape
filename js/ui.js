@@ -244,24 +244,12 @@ export function createUI(app) {
   let countToken = 0;
   let countRaf = 0;
 
-  // ---------------- controls (language / theme / mute) ----------------
+  // ---------------- controls (language / mute) ----------------
   const controlsHTML = `
     <button type="button" class="lang-pill" data-action="toggle-lang" data-lang="en">
       <span class="thumb" aria-hidden="true"></span>
       <span class="opt opt-bn" lang="bn" aria-hidden="true">বাংলা</span>
       <span class="opt opt-en" lang="en" aria-hidden="true">EN</span>
-    </button>
-    <button type="button" class="icon-btn theme-btn" data-action="toggle-theme">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <g class="rays">
-          <line x1="12" y1="1.5" x2="12" y2="4" /><line x1="12" y1="20" x2="12" y2="22.5" />
-          <line x1="1.5" y1="12" x2="4" y2="12" /><line x1="20" y1="12" x2="22.5" y2="12" />
-          <line x1="4.6" y1="4.6" x2="6.3" y2="6.3" /><line x1="17.7" y1="17.7" x2="19.4" y2="19.4" />
-          <line x1="4.6" y1="19.4" x2="6.3" y2="17.7" /><line x1="17.7" y1="6.3" x2="19.4" y2="4.6" />
-        </g>
-        <circle class="sun-core" cx="12" cy="12" r="5.5" />
-        <circle class="moon-cut" cx="12" cy="12" r="5" />
-      </svg>
     </button>
     <button type="button" class="icon-btn mute-btn" data-action="toggle-mute">
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -274,15 +262,10 @@ export function createUI(app) {
 
   function syncControls() {
     const lang = getLang();
-    const dark = getTheme() === 'dark';
     const muted = isMuted();
     $$('.lang-pill').forEach((b) => {
       b.dataset.lang = lang;
       b.setAttribute('aria-label', t('langAria'));
-    });
-    $$('.theme-btn').forEach((b) => {
-      b.setAttribute('aria-label', dark ? t('themeToLight') : t('themeToDark'));
-      b.setAttribute('aria-pressed', String(dark));
     });
     $$('.mute-btn').forEach((b) => {
       b.classList.toggle('muted', muted);
@@ -320,10 +303,6 @@ export function createUI(app) {
       case 'share': A.share(); break;
       case 'endless': A.endless(); break;
       case 'toggle-lang': A.toggleLang(); break;
-      case 'toggle-theme':
-        A.toggleTheme();
-        anim(b.querySelector('svg'), { rotate: [0, 360] }, { duration: 0.6, keep: false });
-        break;
       case 'toggle-mute': A.toggleMute(); break;
     }
   });

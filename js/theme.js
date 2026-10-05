@@ -1,12 +1,10 @@
 /*
- * theme.js — Light ("Dhaka Morning") / Dark ("Dhaka Night") theme.
+ * theme.js — the game's color palette ("Dhaka Morning", light theme only).
  *
  * The HTML/CSS colors live in css/styles.css as CSS variables.
  * The canvas can't read CSS variables cheaply every frame, so the game scene
- * colors are mirrored here in PALETTES. The engine fades smoothly between the
- * two palettes when you toggle the theme (sky, buildings, lights).
- *
- * The theme is kept in memory only — refreshing the page goes back to light.
+ * colors are mirrored here in PALETTES.light. (PALETTES.dark is the old night
+ * palette; the engine still supports it but the UI no longer offers it.)
  */
 
 export const PALETTES = {
@@ -79,24 +77,15 @@ export function onThemeChange(fn) {
   listeners.add(fn);
 }
 
-/** Apply a theme to <html>, cross-fading the UI for ~400 ms. */
-export function setTheme(next, animate = true) {
+/** Apply a theme to <html> (the app always uses 'light'). */
+export function setTheme(next) {
   if (next !== 'light' && next !== 'dark') return;
   const root = document.documentElement;
-  if (animate) {
-    root.classList.add('theme-anim');
-    clearTimeout(setTheme._timer);
-    setTheme._timer = setTimeout(() => root.classList.remove('theme-anim'), 450);
-  }
   theme = next;
   root.setAttribute('data-theme', next);
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute('content', META_COLORS[next]);
   listeners.forEach((fn) => fn(next));
-}
-
-export function toggleTheme() {
-  setTheme(theme === 'light' ? 'dark' : 'light');
 }
 
 // ---------- small color helpers used by the canvas ----------

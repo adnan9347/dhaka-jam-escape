@@ -2,17 +2,16 @@
  * styles.css — the "Rickshaw Art" look: bold colors, thick sticker outlines,
  * offset shadows and chunky rounded type.
  *
- * All colors are CSS custom properties ("variables"). Light theme lives on
- * :root, dark theme on [data-theme="dark"]. Change a color here and it
- * updates everywhere. The game canvas mirrors these colors in js/theme.js.
+ * All colors are CSS custom properties ("variables") on :root. Change a
+ * color here and it updates everywhere. The game is light-theme only; the
+ * canvas mirrors these colors in js/theme.js (PALETTES.light).
  */
 
 /* ------------------------------------------------------------------ */
 /*  Design tokens                                                      */
 /* ------------------------------------------------------------------ */
 :root {
-  --bg: linear-gradient(180deg, #FFF4E0 0%, #FFE3EC 55%, #E3F4FF 100%);
-  --bg-dark: linear-gradient(180deg, #0E0B1F 0%, #1C1340 55%, #0B1A2E 100%);
+  --bg: linear-gradient(180deg, #FFF3DC 0%, #FFE6EF 50%, #E0F2FF 100%);
   --surface: #FFFFFF;
   --surface-alt: #FFF8EC;
   --outline: #2A1E3B;
@@ -24,10 +23,10 @@
   --marigold: #FFC72C;
   --sky-teal: #00A6A6;
   --flag-red: #F42A41;
-  --btn-primary: linear-gradient(135deg, #F25A95 0%, #FF7B7B 100%);
-  --btn-secondary: linear-gradient(135deg, #00A6A6 0%, #1FA67A 100%);
-  --btn-fire: linear-gradient(135deg, #FFC72C 0%, #FF8A65 100%);
-  --btn-text: #1A1230; /* dark text on bright buttons keeps AA contrast */
+  --btn-primary: linear-gradient(135deg, #C2185B 0%, #D02F69 100%);
+  --btn-secondary: linear-gradient(135deg, #00796B 0%, #00806F 100%);
+  --btn-fire: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+  --btn-text: #1A1230; /* text on plain / amber buttons (primary & secondary use white) */
   --sticker-shadow: 4px 4px 0 #2A1E3B;
   --sticker-shadow-sm: 2px 2px 0 #2A1E3B;
   --overlay: rgba(42, 30, 59, 0.5);
@@ -55,40 +54,6 @@
   --safe-l: env(safe-area-inset-left, 0px);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   color-scheme: light;
-}
-
-[data-theme="dark"] {
-  --surface: #1E1736;
-  --surface-alt: #271E45;
-  --outline: #000000;
-  --text-primary: #FFF4E0;
-  --text-secondary: #B9AFD6;
-  --rickshaw-pink: #FF4F96;
-  --bd-green: #00A877;
-  --leaf-green: #2EE59D;
-  --marigold: #FFD54F;
-  --sky-teal: #2EE6E6;
-  --flag-red: #FF4D5E;
-  --btn-primary: linear-gradient(135deg, #FF4F96 0%, #FF8A65 100%);
-  --btn-secondary: linear-gradient(135deg, #2EE6E6 0%, #2EE59D 100%);
-  --btn-fire: linear-gradient(135deg, #FFD54F 0%, #FF8A65 100%);
-  --sticker-shadow: 4px 4px 0 #000000;
-  --sticker-shadow-sm: 2px 2px 0 #000000;
-  --overlay: rgba(5, 3, 15, 0.62);
-  --focus: #FFD54F;
-  --chip: rgba(30, 23, 54, 0.94);
-  --heart: #FF4D5E;
-  --heading: #FFD54F;
-  --accent-text: #FF7AB0;
-  --success-text: #2EE59D;
-  --urgent-bg: #FF4D5E;
-  --urgent-text: #0E0B1F;
-  --check-bg: #2EE59D;
-  --title-1: #FF4F96;
-  --title-2: #FFD54F;
-  --title-3: #2EE6E6;
-  --title-4: #2EE59D;
-  color-scheme: dark;
 }
 
 /* Bangla uses Anek Bangla for both headings and body text */
@@ -125,34 +90,13 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Two stacked background layers so the theme switch can cross-fade the gradient */
-body::before,
-body::after {
+/* The cheerful gradient sits on a fixed layer behind everything */
+body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
-  transition: opacity 0.4s ease;
-}
-body::before {
   background: var(--bg);
-}
-body::after {
-  background: var(--bg-dark);
-  opacity: 0;
-}
-[data-theme="dark"] body {
-  background: #0E0B1F;
-}
-[data-theme="dark"] body::after {
-  opacity: 1;
-}
-
-/* Theme cross-fade (class added for ~450ms by js/theme.js) */
-html.theme-anim *,
-html.theme-anim *::before,
-html.theme-anim *::after {
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, fill 0.4s ease, opacity 0.4s ease !important;
 }
 
 [hidden] {
@@ -297,9 +241,11 @@ body.in-game .topbar {
 }
 .btn-primary {
   background: var(--btn-primary);
+  color: #FFFFFF;
 }
 .btn-secondary {
   background: var(--btn-secondary);
+  color: #FFFFFF;
 }
 .btn-fire {
   background: var(--btn-fire);
@@ -420,42 +366,6 @@ body.in-game .topbar {
 .lang-pill[data-lang="bn"] .opt-bn,
 .lang-pill[data-lang="en"] .opt-en {
   color: #1A1230;
-}
-
-/* Theme button: sun ↔ moon morph */
-.theme-btn svg {
-  width: 26px;
-  height: 26px;
-  overflow: hidden;
-}
-.theme-btn .sun-core {
-  fill: var(--marigold);
-  stroke: var(--outline);
-  stroke-width: 1.6;
-  transition: transform 0.5s var(--spring);
-  transform-origin: 12px 12px;
-}
-.theme-btn .rays {
-  stroke: var(--marigold);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  transform-origin: 12px 12px;
-  transition: transform 0.5s var(--spring), opacity 0.3s;
-}
-.theme-btn .moon-cut {
-  fill: var(--surface);
-  transform: translate(16px, -16px);
-  transition: transform 0.5s var(--spring), fill 0.4s;
-}
-[data-theme="dark"] .theme-btn .rays {
-  opacity: 0;
-  transform: scale(0.4) rotate(90deg);
-}
-[data-theme="dark"] .theme-btn .sun-core {
-  transform: scale(1.25);
-}
-[data-theme="dark"] .theme-btn .moon-cut {
-  transform: translate(4px, -4px);
 }
 
 .mute-btn .cross {
@@ -732,9 +642,6 @@ body.in-game .topbar {
 }
 .role-card[aria-checked="true"] .role-check {
   transform: scale(1);
-}
-[data-theme="dark"] .role-check {
-  color: #0E0B1F;
 }
 
 .nick-row {
